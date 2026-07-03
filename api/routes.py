@@ -1,7 +1,7 @@
 import os
 import shutil
 from pathlib import Path
-from fastapi import APIRouter, UploadFile, File, HTTPException, status
+from fastapi import APIRouter, UploadFile, File, HTTPException, status, Header
 from core.generator import generate_coaching_feedback
 
 router = APIRouter(prefix="/coach", tags=["Coaching"])
@@ -15,13 +15,26 @@ ALLOWED_EXTENSIONS = {".mp4", ".mov", ".avi", ".mkv"}
 ALLOWED_MIME_TYPES = {"video/mp4", "video/quicktime", "video/x-msvideo", "video/x-matroska"}
 
 @router.post("/analyze")
-async def analyze_shot(file: UploadFile = File(...)):
+async def analyze_shot(
+    file: UploadFile = File(...),
+    x_access_key: str = Header(None)
+):
     """
     Endpoint to upload a basketball jump shot video and receive 
     biomechanical feedback and coaching RAG recommendations.
     """
+    # 0. Validate Access Key if configured in the environment
+    expected_key = os.getenv("COACH_ACCESS_KEY")
+    if expected_key:
+        if not x_access_key or x_access_key != expected_key:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Access Denied: Invalid or missing Coach Access Key."
+            )
+
     # 1. Validate File Extension
     file_ext = Path(file.filename).suffix.lower()
+
     if file_ext not in ALLOWED_EXTENSIONS:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,

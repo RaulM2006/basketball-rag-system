@@ -160,9 +160,17 @@ document.addEventListener("DOMContentLoaded", () => {
         
         startLoadingAnimations();
 
+        // Read the Coach Access Key if the user entered one
+        const headers = {};
+        const accessKeyInput = document.getElementById("access-key-input");
+        if (accessKeyInput && accessKeyInput.value.trim()) {
+            headers["X-Access-Key"] = accessKeyInput.value.trim();
+        }
+
         try {
             const response = await fetch("/api/coach/analyze", {
                 method: "POST",
+                headers: headers,
                 body: formData
             });
 
