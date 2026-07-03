@@ -1,8 +1,8 @@
 ---
 title: CourtVision AI
 emoji: 🏀
-colorFrom: orange
-colorTo: black
+colorFrom: yellow
+colorTo: red
 sdk: docker
 app_port: 7860
 pinned: false
