@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CourtVision AI - Multimodal RAG Basketball Coach</title>
+    
+    <!-- Google Fonts: Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Main Style Sheet -->
+    <link rel="stylesheet" href="/static/style.css">
+    
+    <!-- Marked.js for Markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar/Header -->
+        <header class="main-header">
+            <div class="logo-area">
+                <i class="fa-solid fa-basketball logo-icon"></i>
+                <div class="title-meta">
+                    <h1>CourtVision AI</h1>
+                    <span class="subtitle">Multimodal RAG Basketball Coach</span>
+                </div>
+            </div>
+            <div class="status-badge">
+                <span class="pulse-dot"></span>
+                API Connected
+            </div>
+        </header>
+
+        <!-- Main Dashboard Workspace -->
+        <main class="dashboard-grid">
+            
+            <!-- Left Panel: Input & Player -->
+            <section class="panel-card upload-panel">
+                <h2 class="panel-title"><i class="fa-solid fa-video"></i> Upload Shot Video</h2>
+                
+                <div class="dropzone" id="dropzone">
+                    <input type="file" id="video-input" accept="video/mp4,video/quicktime,video/x-msvideo" style="display: none;">
+                    
+                    <div class="dropzone-content" id="dropzone-default">
+                        <div class="icon-bubble">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                        </div>
+                        <h3>Drag & drop video here</h3>
+                        <p>Supports MP4, MOV (Max 10MB)</p>
+                        <button type="button" class="btn btn-secondary" onclick="document.getElementById('video-input').click()">Browse Files</button>
+                    </div>
+                    
+                    <div class="video-preview-container" id="preview-container" style="display: none;">
+                        <video id="video-preview" controls></video>
+                        <div class="video-meta">
+                            <span class="file-name" id="file-name">filename.mp4</span>
+                            <span class="file-size" id="file-size">0.0 MB</span>
+                        </div>
+                        <button type="button" class="btn btn-danger btn-sm" id="btn-remove-video">
+                            <i class="fa-solid fa-trash"></i> Remove Video
+                        </button>
+                    </div>
+                </div>
+
+                <div class="action-bar">
+                    <button type="button" class="btn btn-primary btn-block" id="btn-analyze" disabled>
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Analyze Shooting Form
+                    </button>
+                </div>
+            </section>
+            
+            <!-- Right Panel: Report output -->
+            <section class="panel-card output-panel">
+                <div class="panel-header-tabs">
+                    <h2 class="panel-title"><i class="fa-solid fa-chart-line"></i> Form Analysis & Drills</h2>
+                </div>
+                
+                <!-- Placeholder / Idle State -->
+                <div class="output-placeholder" id="output-placeholder">
+                    <div class="illustration">
+                        <i class="fa-solid fa-chart-simple"></i>
+                    </div>
+                    <h3>Waiting for Analysis</h3>
+                    <p>Upload a video of your basketball jump shot and run the form analyzer to get biomechanical feedback and custom coaching drills.</p>
+                </div>
+                
+                <!-- Loading State Overlay -->
+                <div class="loading-overlay" id="loading-overlay" style="display: none;">
+                    <div class="loader-spinner">
+                        <div class="inner-spin"></div>
+                    </div>
+                    <h3 id="loading-status">Uploading Video...</h3>
+                    <p id="loading-substatus">Analyzing joint alignments and body mechanics</p>
+                </div>
+                
+                <!-- Results Output Display -->
+                <div class="results-display" id="results-display" style="display: none;">
+                    <!-- Floating Summary Card -->
+                    <div class="summary-card" id="summary-meta-card">
+                        <div class="summary-item">
+                            <span class="label">Video Filename</span>
+                            <span class="value" id="res-filename">-</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="label">Filesize</span>
+                            <span class="value" id="res-size">-</span>
+                        </div>
+                    </div>
+
+                    <!-- Main Markdown Coaching Content -->
+                    <div class="report-content markdown-body" id="report-content">
+                        <!-- Marked.js injects HTML here -->
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <footer class="app-footer">
+            <p>CourtVision AI RAG System &bull; Powered by Gemini 2.5 Flash & ChromaDB &bull; Project Phase 5 complete</p>
+        </footer>
+    </div>
+
+    <!-- Main JavaScript Logic -->
+    <script src="/static/app.js"></script>
+</body>
+</html>

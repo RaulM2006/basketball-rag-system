@@ -142,6 +142,8 @@ cython_debug/
 # Temporary raw video upload directory
 /uploads/*
 
-# Data directory contents, keeping only the explanatory README
+# Data directory contents, keeping only the explanatory README and links file
 /data/*
 !/data/README.md
+!/data/yt_links.txt
+
