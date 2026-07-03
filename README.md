@@ -1,3 +1,13 @@
+---
+title: CourtVision AI
+emoji: 🏀
+colorFrom: orange
+colorTo: black
+sdk: docker
+app_port: 7860
+pinned: false
+---
+
 # CourtVision AI 🏀
 
 CourtVision AI is an end-to-end **Multimodal RAG (Retrieval-Augmented Generation)** basketball coaching system. It analyzes a user's uploaded jump shot video frame-by-frame, identifies biomechanical form errors, and queries a local vector database to provide verified coaching corrections and timestamped YouTube drill tutorials.
